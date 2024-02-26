@@ -6,8 +6,25 @@ pipeline {
     tools{
          maven 'M2_HOME'
      }
-    
-        
+
+    stages {
+        stage('Checkout') {
+               steps {
+                // Check out your source code from your version control system (e.g., Git)
+                checkout scm
+            }
+         }
+        stage('Git') {
+            steps {
+                echo 'Getting project from Git'
+                git branch :'Fatma'  ,
+                url : 'https://github.com/mohamedjridi22/Devops.git'
+            }    
+         stage('ff') {
+               steps {
+                // Check out your source code from your version control system (e.g., Git)
+                echo('ffffffffffff')
+            }
         stage ('MVN clean'){
             steps{
                 sh 'mvn clean';
