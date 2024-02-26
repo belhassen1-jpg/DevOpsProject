@@ -1,8 +1,5 @@
 pipeline {
-    environment { 
-        DOCKER_CREDENTIALS_USR = credentials('Nader').username
-        DOCKER_CREDENTIALS_PSW = credentials('Nader').password
-    }
+    
     agent any
     tools {
         maven 'M2_HOME'
