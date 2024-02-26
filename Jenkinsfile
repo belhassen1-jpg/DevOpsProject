@@ -77,4 +77,8 @@ pipeline {
         }
         stage('Email Notification') {
             steps {
-                mail bcc
+                mail bcc: '', body: '" Build Successfully "', cc: '', from: '', replyTo: '', subject: 'Jenkins Notifications', to: 'nader.benali@esprit.tn'
+            }
+        }
+    }
+}
