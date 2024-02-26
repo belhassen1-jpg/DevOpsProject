@@ -15,8 +15,8 @@ pipeline {
         stage('Git') {
             steps {
                 echo 'Getting project from Git'
-                git branch: 'Fatma',
-                    url: 'https://github.com/mohamedjridi22/Devops.git'
+                git branch: 'Nader',
+                    url: 'https://github.com/belhassen1-jpg/DevOpsProject.git'
             }
         }
         stage('ff') {
