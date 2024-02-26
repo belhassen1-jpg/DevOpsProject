@@ -13,13 +13,7 @@ pipeline {
                 checkout scm
             }
          }
-        stage('Git') {
-            steps {
-                echo 'Getting project from Git'
-                git branch :'Nader'  ,
-                url : 'https://github.com/belhassen1-jpg/DevOpsProject.git'
-            }
-        }
+        
         stage ('MVN clean'){
             steps{
                 sh 'mvn clean';
