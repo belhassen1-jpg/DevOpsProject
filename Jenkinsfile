@@ -19,7 +19,12 @@ pipeline {
                     url: 'https://github.com/belhassen1-jpg/DevOpsProject.git'
             }
         }
-        
+        stage('ff') {
+            steps {
+                // Check out your source code from your version control system (e.g., Git)
+                echo('ffffffffffff')
+            }
+        }
         stage('MVN clean') {
             steps {
                 sh 'mvn clean'
@@ -30,20 +35,14 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-        //stage('MVN SONARQUBE') {
-          //  steps {
-            //    sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -U'
-            //}
-        //}
-        stage('MVN Sonarqube') {
+        stage('MVN SONARQUBE') {
             steps {
-                // Check out your source code from your version control system (e.g., Git)
-                echo('ffffffffffff')
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -Dmaven.test.skip=true'
             }
         }
         stage('MVN NEXUS') {
             steps {
-                sh 'mvn deploy -Dmaven.test.skip=true -X'
+                sh 'mvn deploy -Dmaven.test.skip=true'
             }
         }
         stage('Building Docker image') {
@@ -80,3 +79,4 @@ pipeline {
         }
     }
 }
+
