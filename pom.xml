@@ -15,6 +15,7 @@
     <description>kaddem</description>
     <properties>
         <java.version>1.8</java.version>
+        <maven-jar-plugins.version>3.1.1</maven-jar-plugins.version>
     </properties>
     <dependencies>
         <dependency>
