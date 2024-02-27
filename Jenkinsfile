@@ -1,102 +1,81 @@
 pipeline {
+    
     agent any
+    tools {
+        maven 'M2_HOME'
+    }
 
     stages {
+        stage('Checkout') {
+            steps {
+                // Check out your source code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
         stage('Git') {
             steps {
-                echo 'Récupération du code depuis ma branche GitHub...';
-                git branch: 'Nader', url: 'https://github.com/belhassen1-jpg/DevOpsProject.git'
+                echo 'Getting project from Git'
+                git branch: 'Nader',
+                    url: 'https://github.com/belhassen1-jpg/DevOpsProject.git'
             }
         }
-
-        stage('MVN Clean & Install') {
+        stage('ff') {
             steps {
-                sh 'mvn clean install'
+                // Check out your source code from your version control system (e.g., Git)
+                echo('ffffffffffff')
             }
         }
-
-        stage('MVN Compile') {
+        stage('MVN clean') {
+            steps {
+                sh 'mvn clean'
+            }
+        }
+        stage('MVN compile') {
             steps {
                 sh 'mvn compile'
             }
         }
-       
-        stage('Mockito Tests') {
+        stage('MVN SONARQUBE') {
             steps {
-                sh 'mvn test'  // Ou une autre commande si vous avez des tests spécifiques à exécuter
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -Dmaven.test.skip=true'
             }
         }
-
-        stage('SonarQube Analysis') {
+        stage('MVN NEXUS') {
             steps {
-                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar'
+                sh 'mvn deploy -Dmaven.test.skip=true'
             }
         }
-       
-        stage('Nexus Jar') {
+        stage('Building Docker image') {
             steps {
-                    sh 'mvn deploy -DskipTests'
+                // Étape du build de l'image docker de l'application spring boot
+                script {
+                    // Generating image from Dockerfile
+                    sh 'docker build -t nader/kaddem-1.0.jar .'
                 }
+            }
         }
-       
-   /*stage('Docker Build') {
-    steps {
-       
-           sh 'docker build -t  nader2/kaddem:1.0.0 .'
-         
-       
-    }
-   }*/
- /*  stage('Deploy image') {
-    steps {
-        script {
-            def dockerUsername = 'aziza2'
-            def dockerPassword = 'Zayza234000'  // Remplacez par votre mot de passe réel
+        stage('Deploying Docker image') {
+            steps {
+                // Étape du deployment de l'image docker de l'application spring boot
+                script {
+                    // Log in to Docker registry using credentials
+                    sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}"
 
-            sh "echo $dockerPassword | docker login -u $dockerUsername --password-stdin"
-            sh 'docker push aziza2/kaddem:1.0.0'
+                    // Push Docker image
+                    sh 'docker push nader/kaddem-1.0.jar'
+                }
+            }
         }
-    }
-    }
-     stage('Docker compose') {
-    steps {
-       
-           sh 'docker compose up -d'
-         
-       
-    }
-   }
-       stage('Grafana Prometheus') {
-    steps {
-       
-          sh '''
-          docker start prometheus
-          docker start grafana
-          '''
-         
-       
-    }
-   }
- 
-   
-    }
-   
-    post {
-        success {
-            // This will execute only if the whole pipeline succeeds
-            mail to: 'aziza.chouchane@esprit.tn',
-                 subject: 'Pipeline Success',
-                 body: 'The pipeline executed successfully!'
-        }
-        // Optionally, you can handle other conditions like failure
-        failure {
-            mail to: 'aziza.chouchane@esprit.tn',
-                 subject: 'Pipeline Failure',
-                 body: 'The pipeline failed. Please check the Jenkins logs for more details.'
-        }
-    }*/
-   
-             
 
-      }
+        stage('Docker compose') {
+            steps {
+                sh 'docker compose -f docker-compose.yml up -d --build'
+            }
+        }
+        stage('Email Notification') {
+            steps {
+                mail bcc: '', body: '" Build Successfully "', cc: '', from: '', replyTo: '', subject: 'Jenkins Notifications', to: 'nader.benali@esprit.tn'
+            }
+        }
+    }
 }
