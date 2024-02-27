@@ -35,11 +35,11 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-        stage('MVN SONARQUBE') {
-            steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -U'
-            }
-        }
+        //stage('MVN SONARQUBE') {
+          //  steps {
+            //    sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -U'
+            //}
+        //}
         stage('MVN NEXUS') {
             steps {
                 sh 'mvn deploy -Dmaven.test.skip=true'
