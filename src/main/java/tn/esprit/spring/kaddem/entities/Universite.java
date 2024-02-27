@@ -52,4 +52,12 @@ public class Universite implements Serializable{
         this.nomUniv = nomUniv;
     }
 
+    @Override
+    public String toString() {
+        return "Universite{" +
+                "idUniv=" + idUniv +
+                ", nomUniv='" + nomUniv + '\'' +
+                ", departements=" + departements +
+                '}';
+    }
 }
