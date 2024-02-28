@@ -34,9 +34,13 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-        stage('MVN SONARQUBE') {
+      stage('SonarQube Analysis') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -Dmaven.test.skip=true'
+                withSonarQubeEnv('SonarQubeServer') {
+                    script {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
             }
         }
         stage('MVN NEXUS') {
