@@ -1,5 +1,5 @@
 pipeline {
-    
+
     agent any
 
 
@@ -56,22 +56,18 @@ pipeline {
                 }
             }
         }
+  
         stage('Deploying Docker image') {
-            steps {
-                // Étape du deployment de l'image docker de l'application spring boot
-                script {
-                    // Log in to Docker registry using credentials
-                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_CREDENTIALS_USR', passwordVariable: 'DOCKER_CREDENTIALS_PSW')]) {
-
-                  // sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}"
-                           sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
-
-                    // Push Docker image
-                    sh 'docker push nader/kaddem-1.0.jar'
-                }
-            }
+    steps {
+        // Log in to Docker registry using credentials
+        withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS_USR', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+            // Push Docker image
+            sh 'docker push nader/kaddem-1.0.jar'
         }
-        }
+    }
+}
+
 
 
 
