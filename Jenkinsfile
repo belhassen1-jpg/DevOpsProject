@@ -63,7 +63,8 @@ pipeline {
                     // Log in to Docker registry using credentials
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_CREDENTIALS_USR', passwordVariable: 'DOCKER_CREDENTIALS_PSW')]) {
 
-                    sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}"
+                  // sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}"
+                           sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
 
                     // Push Docker image
                     sh 'docker push nader/kaddem-1.0.jar'
@@ -71,6 +72,8 @@ pipeline {
             }
         }
         }
+
+
 
         stage('Docker compose') {
             steps {
