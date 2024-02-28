@@ -14,6 +14,9 @@
     <name>kaddem</name>
     <description>kaddem</description>
     <properties>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
@@ -48,6 +51,7 @@
         </dependency>
 
     </dependencies>
+    
 
     <build>
         <plugins>
