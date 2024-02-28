@@ -75,11 +75,7 @@ pipeline {
                 sh 'docker-compose -f docker-compose.yml up -d --build'
             }
         }
-        stage('Email Notification') {
-            steps {
-                mail bcc: '', body: '" Build Successfully "', cc: '', from: '', replyTo: '', subject: 'Jenkins Notifications', to: 'nader.benali@esprit.tn'
-            }
-        }
+      
     }
 }
 
