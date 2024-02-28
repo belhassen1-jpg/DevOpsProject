@@ -1,9 +1,8 @@
 pipeline {
     
     agent any
-    tools {
-        maven 'M2_HOME'
-    }
+    
+   
 
     stages {
         stage('Checkout') {
@@ -35,11 +34,15 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-        //stage('MVN SONARQUBE') {
-          //  steps {
-            //    sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar -U'
-            //}
-        //}
+      stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                    script {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
         stage('MVN NEXUS') {
             steps {
                 sh 'mvn deploy -Dmaven.test.skip=true'
@@ -79,3 +82,4 @@ pipeline {
         }
     }
 }
+
