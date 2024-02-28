@@ -70,13 +70,9 @@ pipeline {
         }
     }
 }
-
-
-
-
-        stage('Docker compose') {
+    stage('Docker compose') {
             steps {
-                sh 'docker compose -f docker-compose.yml up -d --build'
+                sh 'docker-compose -f docker-compose.yml up -d --build'
             }
         }
         stage('Email Notification') {
