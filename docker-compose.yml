@@ -1,4 +1,4 @@
-ersion: "3.7"  # Utilisation d'une version plus récente de Docker Compose
+version: "3.7"  # Utilisation d'une version plus récente de Docker Compose
 
 services:
   Equipeservice:
