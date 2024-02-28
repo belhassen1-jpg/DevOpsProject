@@ -64,8 +64,9 @@ pipeline {
             sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
             // Push Docker image
            // sh 'docker push nader/kaddem-1.0.jar'
-            
-            sh 'docker push nader2112/kaddem:2.1.jar'
+           sh 'docker push nader2112/kaddem:2.1'
+ 
+          
         }
     }
 }
