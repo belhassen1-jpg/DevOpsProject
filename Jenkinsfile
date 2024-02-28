@@ -33,15 +33,15 @@ pipeline {
                 sh 'mvn compile'
             }
         }
-      //stage('SonarQube Analysis') {
-        //    steps {
-          //      withSonarQubeEnv('SonarQubeServer') {
-            //        script {
-              //          sh 'mvn sonar:sonar'
-                //    }
-                //}
-            //}
-        //}
+      stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQubeServer') {
+                    script {
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
         stage('MVN NEXUS') {
             steps {
                 sh 'mvn deploy -Dmaven.test.skip=true'
