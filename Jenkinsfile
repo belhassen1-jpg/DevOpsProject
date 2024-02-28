@@ -53,7 +53,7 @@ pipeline {
                 // Étape du build de l'image docker de l'application spring boot
                 script {
                     // Generating image from Dockerfile
-                    sh  'sudo docker build -t nader2112/kaddem-0.0.1.jar .'
+                    sh  'sudo docker build -t nader2112/kaddem-2.1.jar .'
                 }
             }
         }
