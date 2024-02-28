@@ -1,10 +1,7 @@
 pipeline {
     
     agent any
-    
-      environment {
-        DOCKER_CREDENTIALS_USR = credentials('DOCKER_CREDENTIALS_USR')
-    }
+
 
     stages {
         stage('Checkout') {
@@ -64,6 +61,8 @@ pipeline {
                 // Étape du deployment de l'image docker de l'application spring boot
                 script {
                     // Log in to Docker registry using credentials
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+
                     sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}"
 
                     // Push Docker image
